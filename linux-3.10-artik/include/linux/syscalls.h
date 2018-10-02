@@ -65,6 +65,7 @@ struct perf_event_attr;
 struct file_handle;
 struct sigaltstack;
 struct prinfo;
+
 #include <linux/types.h>
 #include <linux/aio_abi.h>
 #include <linux/capability.h>

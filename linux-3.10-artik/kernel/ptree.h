@@ -7,6 +7,10 @@
 #include <asm-generic/errno-base.h>
 #include <linux/stddef.h> /* for true and false */
 #include <asm/uaccess.h>
+#include <linux/types.h>
+#include <linux/kernel.h>
+#include <linux/prinfo.h>
+#include <linux/slab.h>
 
 /* Stack struct */
 struct tasklist {

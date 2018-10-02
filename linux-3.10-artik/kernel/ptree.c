@@ -4,7 +4,7 @@
  * Defines the New System Call. You can find the corresponding
  * declaration in linux/syscalls.h
  */
-SYSCALL_DEFINE2(ptree, struct prinfo, *buf, int, *nr)
+SYSCALL_DEFINE2(ptree, struct prinfo *, buf, int *, nr)
 {
 	int rv;
 	struct prinfo *kbuf;
@@ -107,7 +107,7 @@ void process_node(int idx, struct prinfo *buf, struct task_struct *task)
 	   This is guaranteed to be null terminated since, as discussed in
 	   Piazza, task_struct->comm will be less than 16 characters.
 	 */
-	strncpy(to_add.comm, task->comm, MAX_COMM);
+	strncpy(to_add.comm, task->comm, 64);
 
 	buf[idx] = to_add;
 }
