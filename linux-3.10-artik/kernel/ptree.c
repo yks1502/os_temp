@@ -92,29 +92,6 @@ int has_sibling(struct task_struct *task)
 	}
 }
 
-int get_process_dfs(struct prinfo *buf, int *nr)
-{
-	int total_count = 0;
-	int buf_idx = 0;
-	struct task_struct *cur = get_init_task();
-
-	while (cur != NULL) {
-		if (!is_process(cur) || cur -> pid == 0) {
-			cur = get_next_node(cur);
-			continue;
-		}
-		total_count++;
-		if (buf_idx < *nr) {
-			process_node(buf_idx, buf, cur);
-			buf_idx++;
-		}
-		cur = get_next_node(cur);
-	}
-	*nr = buf_idx;
-
-	return total_count;
-}
-
 int has_no_child(struct task_struct *task)
 {
 	struct list_head *children;
@@ -136,6 +113,29 @@ int has_children(struct task_struct *task)
 	}
 
 	return !has_no_child(task);
+}
+
+int get_process_dfs(struct prinfo *buf, int *nr)
+{
+	int total_count = 0;
+	int buf_idx = 0;
+	struct task_struct *cur = get_init_task();
+
+	while (cur != NULL) {
+		if (!is_process(cur) || cur -> pid == 0) {
+			cur = get_next_node(cur);
+			continue;
+		}
+		total_count++;
+		if (buf_idx < *nr) {
+			process_node(buf_idx, buf, cur);
+			buf_idx++;
+		}
+		cur = get_next_node(cur);
+	}
+	*nr = buf_idx;
+
+	return total_count;
 }
 
 int is_process(struct task_struct *task)

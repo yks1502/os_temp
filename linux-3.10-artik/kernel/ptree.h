@@ -12,37 +12,30 @@
 #include <linux/prinfo.h>
 #include <linux/slab.h>
 
-/* Stack struct */
 struct tasklist {
 	struct task_struct *task;
 	int depth;
-	struct list_head list; /* Linked List */
+	struct list_head list;
 };
 
-
-/* acquires lock need to browse task */
-void acquire_tasklist_lock(void);
+void get_tasklist_lock(void);
 
 void release_tasklist_lock(void);
 
-int no_children(struct task_struct *task);
+void process_node(int idx, struct prinfo *buf, struct task_struct *task);
+
+int has_sibling(struct task_struct *task);
+
+int has_no_child(struct task_struct *task);
 
 int has_children(struct task_struct *task);
 
+int get_process_dfs(struct prinfo *buf, int *nr);
+
+int is_process(struct task_struct *task);
+
+struct task_struct *get_init_task(void);
+
 struct task_struct *get_next_node(struct task_struct *cur);
 
-void process_node(int idx, struct prinfo *buf, struct task_struct *task);
-
-int dfs_procs(struct prinfo *buf, int *nr);
-
-int has_sibling(struct task_struct *task);
-/*
- * Returns the init process which is the root parent
- * of all processes on the system.
- */
-struct task_struct *get_init_process(void);
-
-int is_a_process(struct task_struct *task);
-
 #endif
-
